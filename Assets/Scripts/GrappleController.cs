@@ -15,6 +15,8 @@ public class GrappleController : MonoBehaviour
     public float reelSpeed = 6f;
     [Tooltip("Shortest the rope can reel to, so you don't slam into the anchor.")]
     public float minRopeLength = 0.5f;
+    [Tooltip("Velocity multiplier applied the moment you release — makes letting go feel like a launch.")]
+    public float releaseBoost = 1.3f;
 
     [Header("Air control (optional feel tuning)")]
     [Tooltip("Small sideways nudge while swinging, for finer control.")]
@@ -83,8 +85,10 @@ public class GrappleController : MonoBehaviour
     {
         isGrappling = false;
         rope.enabled = false;
-        // We don't zero velocity here on purpose — keeping it is what makes
-        // releasing at the right moment fling you off with momentum.
+        // Fling off: amplify the momentum you built up during the swing.
+        // Keeping (and boosting) velocity here is what makes a well-timed
+        // release feel like a launch instead of just dropping.
+        rb.linearVelocity *= releaseBoost;
     }
 
     // Keeps the player on (or inside) a circle of radius ropeLength around the anchor.
