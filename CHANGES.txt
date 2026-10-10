@@ -1,0 +1,86 @@
+KUNAI - Changes From Design Document
+=====================================
+Author: Khalid Noman
+Project: Kunai (2D grapple-climbing game, Unity 2D / URP)
+
+This file lists how the finished build deviates from the original one-page
+design document, as required by the assignment.
+
+-------------------------------------------------
+CONTROLS (changed from the one-pager)
+-------------------------------------------------
+Original pitch: mouse to aim, left-click to throw/latch (hold to stay roped,
+release to let go), and an optional Space "small hop."
+
+Final build:
+- Left-click: aim + throw the kunai; hold to stay roped, release to let go.
+  Releasing keeps (and slightly boosts) your momentum, so a well-timed release
+  flings you off with speed. This "release boost" was added during tuning
+  because plain release felt flat.
+- E: reel in toward the anchor AND apply an upward launch while held. The reel
+  was moved off Space onto E, and the upward launch was added so climbing feels
+  powerful instead of just "pulling in."
+- Space: a once-per-swing jump. This is a new mechanic that did not exist in the
+  one-pager. You get one jump each time you latch; it detaches you and pops you
+  upward, then refills when you grab a new point. It adds skill expression and an
+  escape option without turning the game into a platformer.
+
+-------------------------------------------------
+WIN CONDITION (changed)
+-------------------------------------------------
+Original pitch: reach the top of the level.
+Final build: you must LAND ON TOP of the finish platform, not just touch it.
+The finish checks the collision came from above, so clipping the side or
+underside while swinging does not count. This makes the ending feel earned and
+removes accidental wins.
+
+-------------------------------------------------
+DEATH / RESPAWN (changed)
+-------------------------------------------------
+Original pitch: death resets you to the last checkpoint.
+Final build: there are no mid-level checkpoints. Hitting a spike (Hazard tag) or
+falling below a kill height respawns you at the start with momentum cleared.
+This keeps the game a tight, single-shot time-attack climb and matched the scope
+better than a checkpoint system.
+
+-------------------------------------------------
+TIMER (as designed)
+-------------------------------------------------
+On-screen timer starts on your first grapple and stops on the win. Best time is
+saved between runs with PlayerPrefs and shown on the win screen. This matches the
+one-pager's time-attack hook.
+
+-------------------------------------------------
+ART DIRECTION (changed/clarified)
+-------------------------------------------------
+Original pitch: ninja sprite, a tileset, a hazard tile, timer UI, and a night-sky
+background.
+Final build:
+- Player: animated yellow ninja sprite (idle animation), free online asset.
+- Grapple points: pixel cobblestone texture.
+- Spikes: two steel spike sprites (a small cluster and a tiling strip).
+- Background: changed to an INTERIOR stone tower (Jump King style) that tiles
+  vertically up the shaft, instead of the originally pitched outdoor/castle
+  exterior. This reads better for an inside-the-tower climb.
+- Smooth follow-camera was added so the tall vertical level is playable.
+
+-------------------------------------------------
+GAME FLOW (as designed)
+-------------------------------------------------
+Title screen (PLAY / QUIT) -> gameplay scene -> timed climb -> land on finish ->
+win screen with time + best time -> retry. Matches the one-pager.
+
+-------------------------------------------------
+STRETCH GOALS (not implemented)
+-------------------------------------------------
+The one-pager listed possible stretch goals: an air dash as a second movement
+layer, 2-3 extra short levels, and a "moon grows as you climb" background beat.
+These were left out to keep scope realistic. The once-per-swing jump covers some
+of the extra-movement idea.
+
+-------------------------------------------------
+SOUND
+-------------------------------------------------
+Sound effects (kunai throw, latch, jump, death, win) are being added using free
+online assets, per the one-pager's audio list. No looping background music, in
+line with the assignment's note.

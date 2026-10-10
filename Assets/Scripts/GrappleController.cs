@@ -91,6 +91,7 @@ public class GrappleController : MonoBehaviour
         if (hit.collider != null)
         {
             isGrappling = true;
+            if (SoundManager.Instance != null) SoundManager.Instance.PlayThrow();
             if (GameManager.Instance != null) GameManager.Instance.StartTimer(); // start timer on first grapple
             anchorPoint = hit.point;
             ropeLength = Vector2.Distance(origin, anchorPoint);
@@ -102,6 +103,7 @@ public class GrappleController : MonoBehaviour
     // Detach and pop upward, keeping swing momentum. Consumes the one swing-jump.
     void Jump()
     {
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayJump();
         canJump = false;
         isGrappling = false;
         rope.enabled = false;

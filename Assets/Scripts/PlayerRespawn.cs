@@ -1,10 +1,10 @@
 using UnityEngine;
 
-// Resets the player to a spawn point when they hit a hazard or fall too far.
+// Resets the player to a fixed start point when they hit a hazard or fall.
 public class PlayerRespawn : MonoBehaviour
 {
-    [Tooltip("Where the player reappears after dying. Defaults to their start position.")]
-    public Vector2 spawnPoint;
+    [Tooltip("Drag the StartPoint object here — the player always respawns here.")]
+    public Transform startPoint;
     [Tooltip("If the player falls below this Y height, they die.")]
     public float killHeight = -10f;
 
@@ -13,18 +13,14 @@ public class PlayerRespawn : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Remember where we started as the default respawn spot.
-        spawnPoint = transform.position;
     }
 
     void Update()
     {
-        // Fell off the bottom of the level.
         if (transform.position.y < killHeight)
             Respawn();
     }
 
-    // Anything tagged "Hazard" that we touch kills us.
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Hazard"))
@@ -33,8 +29,11 @@ public class PlayerRespawn : MonoBehaviour
 
     void Respawn()
     {
-        // Zero out momentum so we don't fly off on respawn, then teleport back.
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayDeath();
         rb.linearVelocity = Vector2.zero;
-        transform.position = spawnPoint;
+        rb.angularVelocity = 0f;
+        // Always teleport to the fixed start marker.
+        if (startPoint != null)
+            transform.position = startPoint.position;
     }
 }

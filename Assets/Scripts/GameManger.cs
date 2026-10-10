@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         if (finished) return;
         finished = true;
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayWin();
         timing = false;
 
         // Save best time with PlayerPrefs (persists between runs).
